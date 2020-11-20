@@ -1,0 +1,94 @@
+{
+  "RelatedItems": [
+    {
+      "title": "アクアの関連記事",
+      "link": {
+        "text": "アクアに関する記事一覧",
+        "href": "#"
+      },
+      "items": [
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "title": "カローラの関連記事",
+      "link": {
+        "text": "カローラに関する記事一覧",
+        "href": "#"
+      },
+      "items": [
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        },
+        {
+          "title": "3つの安心を約束するトヨタ販売店の中古車ブランド",
+          "image": {
+            "src": "/pages/contents/jpucar/assets/images/img_carlist-relate_01.jpg",
+            "alt": ""
+          },
+          "text": "テキストテキストテキストテキストテキストテテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキ",
+          "href": "#"
+        }
+      ]
+    }
+  ]
+}

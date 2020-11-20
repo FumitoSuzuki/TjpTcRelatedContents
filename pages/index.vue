@@ -1,73 +1,31 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        TjpTcRelatedContents
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="l-wrapper">
+    <section class="l-content l-content--grey">
+      <div class="l-content__in">
+        <div class="p-carlist-related-car__heading">
+          <h3 class="c-heading-02">関連記事一覧</h3>
+        </div>
+        <div class="">
+          <ul class="">
+            <li v-for="(item, key) in articles" :key="key">
+              <a :href="`/related/${key}`" target="_blank">
+                <div class="">{{ item.title }}</div>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData({ $content, $params }) {
+    const article = await $content("related").fetch();
+    return {
+      articles: article.RelatedItems,
+    };
+  },
+}
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

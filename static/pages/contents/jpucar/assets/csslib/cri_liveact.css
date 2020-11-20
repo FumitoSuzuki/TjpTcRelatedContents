@@ -1,0 +1,2375 @@
+@charset "UTF-8";
+
+/*
+ *
+ * LiveAct(R) PRO
+ * Runtime Library
+ *
+ * (c) 2016 CRI Middleware Co., Ltd.
+ * Version : 1.85.603.0
+ *
+ */
+
+
+
+/**
+ * コントロールUI
+ *
+ * Styleguide 1
+ */
+
+
+/**
+ * コントロールUI全体
+ *
+ * Styleguide 1.1
+ */
+
+/**
+ * .liveact-controls
+ *
+ * コントロールUIをまとめる要素を指すセレクタです。
+ * コントロールUIとは:
+ * - 再生ボタン
+ * - シークバー
+ * - プレーヤー中央の大きな再生ボタン
+ * - チャプター区切りUI
+ * - etc.
+ *
+ * ボタン類の大きさはfont-sizeで制御しています。
+ *
+ * 全称セレクタやdiv要素全体に対してfont-sizeを指定すると
+ * 表示が崩れることがあります。ご注意ください。
+ *
+ * Styleguide 1.1.1
+ */
+.liveact-controls,.liveact-controls__modal {
+    width: 100px !important;
+    height: calc(100% - 8px * 2) !important;
+    margin: 8px 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    display: inline-block !important;
+
+    font-size: 36px;
+    line-height: 1;
+
+    box-sizing: border-box;
+
+    /* ザブトン */
+    border-bottom: 1px solid black;
+    color: rgba(255, 255, 255, 0.8);
+
+    /* 後ろのcanvasにイベントを飛ばすためにザブトンのイベントは無効にする */
+    pointer-events: none;
+}
+
+
+    /**
+  * .liveact-controls,
+  * .liveact-controls > .lac-row,
+  * .liveact-controls > .lac-row > div,
+  * .liveact-controls > .lac-row > div > div 
+  *
+  * .liveact-controls.liveact-controls--audio,
+  * .liveact-controls.liveact-controls--swipe,
+  * .liveact-controls.liveact-controls--no-seekbar,
+  * .liveact-controls.liveact-controls--no-seekbar > .lac-row,
+  * .liveact-controls.liveact-controls--no-seekbar > .lac-row > div,
+  * .liveact-controls.liveact-controls--no-seekbar > .lac-row > div > div
+  *
+  * コントロールUIのボタンサイズを指定しています。
+  * 全称セレクタやdiv要素全体に対してfont-sizeを指定しても、
+  * ボタンサイズが変わらないようにしています。
+  * Styleguide 1.1.2
+  */
+    .liveact-controls,
+    .liveact-controls > .lac-row,
+    .liveact-controls > .lac-row > div,
+    .liveact-controls > .lac-row > div > div {
+        font-size: 36px;
+    }
+
+        .liveact-controls.liveact-controls--audio,
+        .liveact-controls.liveact-controls--swipe,
+        .liveact-controls.liveact-controls--no-seekbar,
+        .liveact-controls.liveact-controls--no-seekbar > .lac-row,
+        .liveact-controls.liveact-controls--no-seekbar > .lac-row > div,
+        .liveact-controls.liveact-controls--no-seekbar > .lac-row > div > div {
+            font-size: 54px;
+        }
+/**
+ * .lac-div--mobile .liveact-controls
+ *
+ * モバイル環境においてボタンの大きさは、
+ * 画面の幅・高さのうち短い方の辺長に比例する仕様となっています。
+ * 画面幅320pxで36pxになります。
+ * (36px / 320px * 100vmin = 11.25vmin)
+ *
+ * これにより、下記マークアップが設定されていないページでも、
+ * ボタンが小さくなりすぎることなく、問題なく操作できます。
+ *
+ * <meta name="viewport" content="width=device-width" />
+ *
+ * Styleguide 1.1.2
+ */
+.lac-div--mobile .liveact-controls {
+    /* viewport-width: 320px -> 36px */
+    font-size: 11.25vmin;
+}
+
+/**
+ * .liveact-controls.liveact-controls--no-seekbar,
+ * .liveact-controls.liveact-controls--audio,
+ * .liveact-controls.liveact-controls--swipe
+ *
+ * シークバーとグレーの座布団がなく、
+ * プレーヤー右下にボタンが固まっているタイプの
+ * コントロールUIで使用するmodifierです。
+ *
+ * 下記コンテンツタイプで利用されます。
+ * - 音声つきサムネイル動画
+ * - スワイプ動画
+ * - 全天球静止画
+ *
+ * Styleguide 1.1.3
+ *
+ * --audioと--swipeは旧仕様です。
+ * --no-seekbarをご利用ください。
+ */
+.liveact-controls.liveact-controls--audio,
+.liveact-controls.liveact-controls--swipe,
+.liveact-controls.liveact-controls--no-seekbar {
+    padding: 0;
+    text-shadow: 1px 1px 3px #000;
+    border-bottom: none;
+    font-size: 54px;
+    right:10px;
+}
+
+/**
+ * .lac-div--mobile .liveact-controls.liveact-controls--audio,
+ * .lac-div--mobile .liveact-controls.liveact-controls--swipe,
+ * .lac-div--mobile .liveact-controls.liveact-controls--no-seekbar
+ *
+ * モバイル環境においては、UIアイコンの大きさは
+ * 画面の幅・高さのうち短い方の辺長に比例します。
+ *
+ * Styleguide 1.1.4
+ */
+.lac-div--mobile .liveact-controls.liveact-controls--audio,
+.lac-div--mobile .liveact-controls.liveact-controls--swipe,
+.lac-div--mobile .liveact-controls.liveact-controls--no-seekbar {
+    /* viewport-width: 320px -> 54px */
+    font-size: 16.875vmin;
+}
+
+/**
+ * .liveact-controls.liveact-controls--faded-out
+ *
+ * コントロールフェードアウトして
+ * 完全に見えなくなったときに付与されるmodifierです。
+ *
+ * Styleguide 1.1.5
+ */
+.liveact-controls.liveact-controls--faded-out * {
+    /**
+     * 見えないコントロールの誤操作を防止します。
+     */
+    pointer-events: none !important;
+}
+
+
+/**
+ * .liveact-controls--playback-range-adjustment-mode
+ *
+ * 再生範囲調節モードで付与されるmodifierです。
+ *
+ * Styleguide 1.1.6
+ */
+.liveact-controls--playback-range-adjustment-mode {}
+
+
+/**
+ * .liveact-controls > .lac-row
+ *
+ * シークバー・座布団のあるコントロールUI内の
+ * 1行を表す要素を指すセレクタです。
+ *
+ * Styleguide 1.1.7
+ */
+.liveact-controls > .lac-row,.liveact-controls__modal > .lac-row {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    -webkit-flex-direction: column !important;
+    align-items: flex-end;
+    -webkit-align-items: flex-end;
+
+    pointer-events: none;
+}
+
+/**
+ * .liveact-controls > .lac-row > div
+ *
+ * シークバー・座布団のあるコントロールUI内の
+ * 1行を表す要素内に配置されている要素を指すセレクタです。
+ * 例)
+ * - ボタン
+ * - 時刻表示
+ *
+ * Styleguide 1.1.8
+ */
+.liveact-controls > .lac-row > div,.liveact-controls__modal > .lac-row > div {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    box-sizing: border-box;
+    font-size: 1em;
+    pointer-events: auto;
+}
+
+/**
+ * .liveact-controls > .lac-row > div:hover
+ *
+ * シークバー・座布団のあるコントロールUI内の
+ * 1行を表す要素内に配置されている要素について、
+ * タップしたりマウスカーソルを載せたりした際に適用されるスタイルです。
+ *
+ * Styleguide 1.1.9
+ */
+.liveact-controls > .lac-row > div:hover,
+.liveact-controls__modal > .lac-row > div:hover{
+    color: rgba(255, 255, 255, 1);
+}
+
+/**
+ * .liveact-controls.liveact-controls--audio > .lac-row,
+ * .liveact-controls.liveact-controls--swipe > .lac-row,
+ * .liveact-controls.liveact-controls--no-seekbar > .lac-row
+ *
+ * シークバー・座布団のないコントロールUI内の
+ * 1行を表す要素を指すセレクタです。
+ *
+ * Styleguide 1.1.10
+ */
+.liveact-controls.liveact-controls--audio > .lac-row,
+.liveact-controls.liveact-controls--swipe > .lac-row,
+.liveact-controls.liveact-controls--no-seekbar > .lac-row {
+    background-color: rgba(0, 0, 0, 0.0);
+    padding: 0;
+
+    /**
+     * シークバー・座布団のないコントロールUIでは、
+     * ザブトンをタップ・クリックできません。
+     */
+    pointer-events: none;
+}
+
+
+/**
+ * コントロールUIのボタン
+ *
+ * Styleguide 1.2
+ */
+
+/**
+ * 共通
+ *
+ * Styleguide 1.2.1
+ */
+
+/**
+ * .lac-button
+ *
+ * コントロールUIのすべてのボタンを指すセレクタです。
+ * ボタンの大きさ等を記述します。
+ *
+ * Styleguide 1.2.1.1
+ */
+.lac-button {
+    text-align: center;
+    /* フォントアイコンのフォントを指定 */
+    /* デフォルトのフォントは本cssファイル末尾に、data-urlとして埋め込んであります。 */
+    font-family: 'liveact-controls';
+    font-style: normal;
+    cursor: pointer;
+    line-height: 1;
+    width:  48px;
+    height: 40px;
+    line-height: 20px;
+    padding: 8px;
+    right: 0 !important;
+}
+
+/**
+ * .lac-button:before
+ *
+ * コントロールUIのすべてのボタンを指すセレクタです。
+ * ボタンのアイコンを記述します。
+ *
+ * Styleguide 1.2.1.2
+ */
+.lac-button:before {
+    font-size: 60%;
+    width:  1em;
+    height: 1em;
+    margin: auto;
+    display: block;
+}
+
+/**
+ * .lac-buttonon
+ *
+ * ボタンが「オン」の状態であることを表すmodifierです。
+ *
+ * Styleguide 1.2.1.3
+ */
+.lac-buttonon: {}
+
+
+/**
+ * 再生・一時停止ボタン
+ *
+ * Styleguide 1.2.2
+ */
+
+
+/**
+ * .lac-play
+ *
+ * 再生・一時停止ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.2.1
+ */
+.lac-play {}
+
+/**
+ * .lac-play:before
+ *
+ * 状態      : 一時停止中
+ * アクション: 再生
+ *
+ *   [>
+ *
+ * Styleguide 1.2.2.2
+ */
+.lac-play:before {
+    content: "\e901";
+}
+
+/**
+ * .lac-play.lac-buttonon:before
+ *
+ * 状態      : 再生中
+ * アクション: 一時停止
+ *
+ *   ||
+ *
+ * Styleguide 1.2.2.3
+ */
+.lac-play.lac-buttonon:before {
+    content: "\e900";
+}
+
+
+/**
+ * 音声有効化/無効化（ミュート）ボタン
+ *
+ * Styleguide 1.2.3
+ */
+
+/**
+ * .lac-volume
+ *
+ * 音声有効化/無効化（ミュート）ボタン
+ *
+ * Styleguide 1.2.3.1
+ */
+.lac-volume {}
+
+/**
+ * .lac-volume:before
+ *
+ * 状態      : 音声がオフ
+ * アクション: 音声有効化
+ *
+ * Styleguide 1.2.3.2
+ */
+.lac-volume:before {
+    content: "\e902";
+}
+
+/**
+ * .lac-volume.lac-buttonon:before
+ *
+ * 状態      : 音声がオン
+ * アクション: 音声無効化
+ *
+ * Styleguide 1.2.3.3
+ */
+.lac-volume.lac-buttonon:before {
+    content: "\e903";
+}
+
+
+/**
+ * ループ有効化/無効化ボタン
+ *
+ * Styleguide 1.2.4
+ */
+
+
+/**
+ * .lac-loop
+ *
+ * ループ有効化/無効化ボタン
+ *
+ * Styleguide 1.2.4.1
+ */
+.lac-loop {}
+
+/**
+ * .lac-loop:before
+ *
+ * 状態      : ループオフ
+ * アクション: ループ有効化
+ *
+ * Styleguide 1.2.4.2
+ */
+.lac-loop:before {
+    content: "\e904";
+}
+
+/**
+ * .lac-loop.lac-buttonon:before
+ *
+ * 状態      : ループオン
+ * アクション: ループ無効化
+ *
+ * Styleguide 1.2.4.3
+ */
+.lac-loop.lac-buttonon:before {
+    content: "\e905";
+}
+
+
+/**
+ * フルスクリーン化/通常化ボタン
+ *
+ * Styleguide 1.2.5
+ */
+
+
+/**
+ * .lac-fullscreen
+ *
+ * フルスクリーン化/通常化ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.5.1
+ */
+.lac-fullscreen {
+    display: none !important;
+}
+
+/**
+ * .lac-fullscreen:before
+ *
+ * 状態      : 通常状態
+ * アクション: フルスクリーン化
+ *
+ * Styleguide 1.2.5.2
+ */
+.lac-fullscreen:before {
+    content: "\e906";
+}
+
+/**
+ * .lac-fullscreen.lac-buttonon:before
+ *
+ * 状態      : フルスクリーン状態
+ * アクション: 通常化
+ *
+ * Styleguide 1.2.5.3
+ */
+.lac-fullscreen.lac-buttonon:before {
+    content: "\e907";
+}
+
+
+/**
+ * プレーヤー中央の大きな再生ボタン
+ *
+ * Styleguide 1.2.6
+ */
+
+/**
+ * .lac-screen-play
+ *
+ * プレーヤー中央の大きな再生ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.6.1
+ */
+.lac-screen-play {
+    font-size: 80px;
+    width:  1em;
+    height: 1em;
+
+    /* centering */
+    position: absolute;
+    top:    0;
+    bottom: 0;
+    left:   0;
+    right:  0;
+    margin: auto;
+
+    display: table-cell;
+    color: rgba(255, 255, 255, 1);
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    border-radius:         50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius:    50%;
+    background: rgba(0, 0, 0, 0.5);
+
+    pointer-events: none;
+}
+
+/**
+ * .lac-div--mobile .lac-screen-play
+ *
+ * モバイル環境では、画面の幅高さ短い方の辺長に比例して大きさを計算します。
+ *
+ * Styleguide 1.2.6.2
+ */
+.lac-div--mobile .lac-screen-play {
+    /* viewport-width: 320px -> 80px */
+    font-size: 25vmin;
+}
+
+
+/**
+ * .lac-screen-play:before
+ *
+ * 状態      : 一時停止中
+ * アクション: 再生
+ *
+ *   [>
+ *
+ * Styleguide 1.2.6.3
+ */
+.lac-screen-play:before {
+    content: "\e901";
+    position: absolute;
+    font-size: 60px;
+    left: 18.0%;
+    top:  12.5%;
+}
+
+/**
+ * .lac-div--mobile .lac-screen-play:before
+ *
+ * モバイル環境では、画面の幅高さ短い方の辺長に比例して大きさを計算します。
+ *
+ * Styleguide 1.2.6.4
+ */
+.lac-div--mobile .lac-screen-play:before {
+    /* viewport-width: 320px -> 60px */
+    font-size: 18.75vmin
+}
+
+/**
+ * .lac-screen-play.lac-buttonon:before
+ *
+ * 動画を再生すると非表示化するため、
+ * 再生状態のスタイルはありません。
+ *
+ * Styleguide 1.2.6.5
+ */
+.lac-screen-play.lac-buttonon:before {}
+
+
+/**
+ * スワイプ動画のズームインボタン
+ *
+ * Styleguide 1.2.7
+ */
+
+
+/**
+ * .lac-swipe-ui-zoom-in
+ *
+ * ズームインボタン
+ *
+ * Styleguide 1.2.7.1
+ */
+.lac-swipe-ui-zoom-in {
+    order: 1 !important;
+    -webkit-order: 1 !important;
+}
+
+/**
+ * .lac-swipe-ui-zoom-in:before
+ *
+ * 平常時のズームインボタンの見た目を記述します。
+ *
+ * Styleguide 1.2.7.2
+ */
+.lac-swipe-ui-zoom-in:before {
+    content: "\e908";
+}
+
+/**
+ * .lac-swipe-ui-zoom-in:hover:before
+ *
+ * 平常時のズームインボタンの見た目を記述します。
+ * マウスカーソルが乗っている間、ならびに押下中の見た目を記述します。
+ *
+ * Styleguide 1.2.7.3
+ */
+.lac-swipe-ui-zoom-in:hover:before {
+    content: "\e909";
+}
+
+
+/**
+ * スワイプ動画のズームアウトボタン
+ *
+ * Styleguide 1.2.8
+ */
+
+/**
+ * .lac-swipe-ui-zoom-out
+ *
+ * ズームアウトボタン
+ *
+ * Styleguide 1.2.8.1
+ */
+.lac-swipe-ui-zoom-out {
+    order: 2 !important;
+    -webkit-order: 2 !important;
+}
+
+/**
+ * .lac-swipe-ui-zoom-out:before
+ *
+ * 平常時のズームアウトボタンの見た目を記述します。
+ *
+ * Styleguide 1.2.8.2
+ */
+.lac-swipe-ui-zoom-out:before {
+    content: "\e90a";
+}
+
+/**
+ * .lac-swipe-ui-zoom-out:hover:before
+ *
+ * 平常時のズームアウトボタンの見た目を記述します。
+ * マウスカーソルが乗っている間、ならびに押下中の見た目を記述します。
+ *
+ * Styleguide 1.2.8.3
+ */
+.lac-swipe-ui-zoom-out:hover:before {
+    content: "\e90b";
+}
+
+
+/**
+ * スワイプ動画のモード切替ボタン
+ *
+ * Styleguide 1.2.9
+ */
+
+
+/**
+ * .lac-swipe-ui-mode-toggle
+ *
+ * スワイプ動画のモード切替ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.9.1
+ */
+.lac-swipe-ui-mode-toggle {
+    order:3 !important;
+    -webkit-order:3 !important;
+    padding:8px !important;
+    right:0 !important;
+    top:0 !important;
+}
+
+/**
+ * .lac-swipe-ui-mode-toggle:before
+ *
+ * 状態      : 回転モード
+ * アクション: 回転モードから平行移動モードに切り替え
+ *
+ * Styleguide 1.2.9.2
+ */
+.lac-swipe-ui-mode-toggle:before {
+    content: "\e90c";
+}
+
+/**
+ * .lac-swipe-ui-mode-toggle.lac-buttonon:before
+ *
+ * 状態      : 平行移動モード
+ * アクション: 平行移動モードから回転モードに切り替え
+ *
+ * Styleguide 1.2.9.3
+ */
+.lac-swipe-ui-mode-toggle.lac-buttonon:before {
+    content: "\e90d";
+}
+
+
+/**
+ * ジャイロセンサの有効化/無効化ボタン
+ *
+ * Styleguide 1.2.10
+ */
+
+
+/**
+ * .lac-gyro-sensor
+ *
+ * ジャイロセンサの有効化/無効化ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.10.1
+ */
+.lac-gyro-sensor {
+    order:0 !important;
+    -webkit-order:0 !important;
+    /* これだけ横長 */
+    width: 100% !important;
+    height: 40px !important;
+
+    /* position:absoluteされるのを防ぐ */
+    position: static !important;
+
+    /* background-imageはbeforeに入れてほしい */
+    background-image: url("") !important;
+
+    /* padding:0されるのを防ぐ */
+    padding: 8px !important;
+
+    right:0 !important;
+    top:0 !important;
+}
+
+/**
+ * .lac-gyro-sensor:before
+ *
+ * 状態      : ジャイロセンサーオフ状態
+ * アクション: ジャイロセンサー有効化
+ *
+ * Styleguide 1.2.10.2
+ */
+.lac-gyro-sensor:before {
+    content: "";
+    background-image: url("/pages/contents/jpucar/assets/materials/gyro_on.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    /* 消させない */
+    display: block !important;
+    width: 100%;
+    height: 100%;
+}
+
+/**
+ * .lac-gyro-sensor.lac-buttonon:before
+ *
+ * 状態      : ジャイロセンサーオン状態
+ * アクション: ジャイロセンサーを無効化
+ *
+ * Styleguide 1.2.10.3
+ */
+.lac-gyro-sensor.lac-buttonon:before {
+    content: "";
+    background-image: url("/pages/contents/jpucar/assets/materials/gyro_off.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+/**
+ * チャプターミニメニュー開閉ボタン
+ *
+ * Styleguide 1.2.11
+ */
+
+/**
+ * .lac-chapter:before
+ *
+ * 状態      : チャプターミニメニューが閉じている
+ * アクション: チャプターミニメニューを開く
+ *
+ * Styleguide 1.2.11.1
+ */
+.lac-chapter:before {
+    content: "\e910";
+}
+
+/**
+ * .lac-chapter.lac-buttonon:before
+ *
+ * 状態      : チャプターミニメニューが開いている
+ * アクション: チャプターミニメニューを閉じる
+ *
+ * Styleguide 1.2.11.2
+ */
+.lac-chapter.lac-buttonon:before {
+    color: rgba(255, 255, 255, 1);
+    content: "\e910";
+}
+
+
+/**
+ * 再生範囲ミニメニュー開閉ボタン
+ *
+ * Styleguide 1.2.12
+ */
+
+/**
+ * .lac-playback-range:before
+ *
+ * 状態      : 再生範囲ミニメニューが閉じている
+ * アクション: 再生範囲ミニメニューを開く
+ *
+ * Styleguide 1.2.12.1
+ */
+.lac-playback-range:before {
+    content: "\e911";
+}
+
+/**
+ * .lac-playback-range.lac-buttonon:before
+ *
+ * 状態      : 再生範囲ミニメニューが開いている
+ * アクション: 再生範囲ミニメニューを閉じる
+ *
+ * Styleguide 1.2.12.2
+ */
+.lac-playback-range.lac-buttonon:before {
+    color: rgba(234, 151, 35, 1);
+}
+
+
+/**
+ * コマ送りボタン
+ *
+ * Styleguide 1.2.13
+ */
+
+/**
+ * .lac-next-frame
+ *
+ * コマ送りボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.13.1
+ */
+.lac-next-frame {
+    font-size: 86.67%;
+}
+
+/**
+ * .lac-next-frame:before
+ *
+ * コマ送りボタンの見た目を記述します。
+ *
+ * Styleguide 1.2.13.2
+ */
+.lac-next-frame:before {
+    content: "\e915";
+}
+
+
+/**
+ * コマ戻しボタン
+ *
+ * Styleguide 1.2.14
+ */
+
+
+/**
+ * .lac-prev-frame,.lac-next-frame
+ *
+ * コマ戻しボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.14.1
+ */
+.lac-prev-frame,.lac-next-frame {
+    font-size: 86.67%;
+}
+
+/**
+ * .lac-prev-frame:before {
+ *
+ * コマ戻しボタンの見た目を記述します。
+ *
+ * Styleguide 1.2.14.2
+ */
+.lac-prev-frame:before {
+    content: "\e914";
+}
+
+
+/**
+ * ミニメニューのピン留めボタン
+ *
+ * Styleguide 1.2.15
+ */
+
+/**
+ * .lac-minimenu .lac-minimenu-pin
+ *
+ * ミニメニューのピン留めボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.15.1
+ */
+.lac-minimenu .lac-minimenu-pin {
+    position: absolute;
+    top: 0.1em;
+    right: 0.1em;
+    width: auto;
+    height: auto;
+    font-size: 1.5em;
+}
+
+/**
+ * .lac-pin:before
+ *
+ * 状態      : ピン留めされていない
+ * アクション: ピン留めを行う
+ *
+ * Styleguide 1.2.15.2
+ */
+.lac-pin:before {
+    content: "\e916";
+}
+
+/**
+ * .lac-pin.lac-buttonon:before
+ *
+ * 状態      : ピン留めされている
+ * アクション: ピン留めを解除する
+ *
+ * Styleguide 1.2.15.3
+ */
+.lac-pin.lac-buttonon:before {
+    color: rgba(255, 255, 255, 1);
+}
+
+
+/**
+ * コントロールのデザイン調整用スペーサー
+ *
+ * Styleguide 1.2.16
+ */
+
+
+/**
+ * .lac-spacer
+ * コントロールのデザイン調整用スペーサーを指すセレクタです。
+ *
+ * Styleguide 1.2.16.1
+ */
+.lac-spacer {
+    flex-grow: 1;
+}
+
+
+/**
+ * 再生時刻表示
+ *
+ * Styleguide 1.2.17
+ */
+
+
+/**
+ * .lac-time
+ *
+ * 再生時刻表示部分を指すセレクタです。
+ * ボタンではありませんが、便宜的にここに記述しています。
+ *
+ * Styleguide 1.2.17.1
+ */
+.lac-time {
+    font-size: 40% !important;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+/**
+ * 再生速度表示・再生速度ミニメニュー開閉ボタン
+ *
+ * Styleguide 1.2.18
+ */
+
+
+/**
+ * .lac-playback-rate
+ *
+ * 再生速度表示・再生速度ミニメニュー開閉ボタンを指すセレクタです。
+ *
+ * Styleguide 1.2.18.1
+ */
+.lac-playback-rate {
+    font-size: 70% !important;
+    white-space: nowrap;
+    width: 2em;
+}
+
+/**
+ * .lac-playback-rate::before {
+ *
+ * 再生速度表示・再生速度ミニメニュー開閉ボタンの表示内容を記述します。
+ * 状態      : 再生速度ミニメニューが閉じている
+ * アクション: 再生速度ミニメニューを開く
+ *
+ * Styleguide 1.2.18.2
+ */
+.lac-playback-rate::before {
+    width: 100%;
+    content: 'x'attr(data-playback-rate);
+}
+
+/**
+ * .lac-playback-rate.lac-buttonon:before
+ *
+ * 再生速度表示・再生速度ミニメニュー開閉ボタンの表示内容を記述します。
+ * 状態      : 再生速度ミニメニューが開いている
+ * アクション: 再生速度ミニメニューを閉じる
+ *
+ * Styleguide 1.2.18.3
+ */
+.lac-playback-rate.lac-buttonon:before {
+    color: rgba(255, 255, 255, 1);
+}
+
+
+/**
+ * ユーザカスタムボタンサンプル
+ *
+ * Styleguide 1.2.99
+ */
+
+/**
+ * .lac-user-button1
+ *
+ * 必要に応じて、大きさの調整等を行ってください。
+ *
+ * Styleguide 1.2.99.1
+ */
+.lac-user-button1 {
+    box-sizing: content-box;
+    position:absolute !important;
+    right:0;
+    bottom:10px;
+    background-size:cover;
+    opacity:.5;
+    order:4 !important;
+    -webkit-order:4 !important;
+}
+
+
+/*
+ * .lac-user-button1:hover
+ * カスタムコード
+ */
+.lac-user-button1:hover{
+    opacity:1.0;
+}
+
+
+
+/**
+ * .lac-user-button1:before
+ *
+ * contentプロパティやbackground-imageプロパティ等を用いて、
+ * ボタンの見た目を記述してください。
+ *
+ * Styleguide 1.2.99.2
+ */
+.lac-user-button1:before
+{
+     content: url(/pages/contents/jpucar/assets/materials/icon_enlarge.png);
+}
+
+
+/**
+ * ミニメニュー
+ *
+ * Styleguide 1.3
+ */
+
+
+/**
+ * ミニメニュー共通
+ *
+ * Styleguide 1.3.1
+ */
+
+/**
+ * .lac-minimenu-field
+ *
+ * ミニメニューが配置されうる領域を表します。
+ * .liveact-controlの領域うち、.lac-row以外の領域です。
+ *
+ * Styleguide 1.3.1.1
+ */
+.lac-minimenu-field {
+    display: flex;
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+
+    /**
+     * タップやクリックのイベントを処理しません。
+     * 背面のcanvasに委ねます。
+     */
+    pointer-events: none;
+}
+
+
+/**
+ * .lac-minimenu
+ *
+ * ミニメニューに共通して付与されるセレクタです。
+ * ミニメニューが縦に伸びた際に使用される領域も包含します。
+ *
+ * Styleguide 1.3.1.2
+ */
+.lac-minimenu {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+}
+
+/**
+ * .lac-minimenu.lac-minimenu--open
+ *
+ * ミニメニューが開いているとき付与されるmodifierです。
+ *
+ * Styleguide 1.3.1.3
+ */
+.lac-minimenu.lac-minimenu--open {
+    display: flex;
+}
+
+/**
+ * .lac-minimenu-wrap
+ *
+ * ミニメニューのウィンドウ部分に相当する要素を指すセレクタです。
+ * 下記を内包します:
+ * - header
+ * - body
+ * - footer
+ * - pin ... ピン留めのピン
+ *
+ * Styleguide 1.3.1.4
+ */
+.lac-minimenu-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 4px;
+    padding: 12px;
+    max-height: 100%;
+    width: 100%;
+    word-wrap: break-word;
+    pointer-events: auto;
+    background-color: rgba(4, 0, 0, 0.69);
+    overflow: hidden;
+    border-radius: 4px;
+    font-size: 0.5em;
+}
+
+/**
+ * .lac-minimenu .lac-minimenu-header
+ *
+ * ミニメニューの表題部分を指すセレクタです。
+ *
+ * Styleguide 1.3.1.5
+ */
+.lac-minimenu .lac-minimenu-header {
+    text-align: center;
+    padding: 0 0.8em;
+    min-width: 6em;
+}
+
+/**
+ * .lac-minimenu .lac-minimenu-body
+ *
+ * ミニメニューの内容部分を指すセレクタです。
+ *
+ * Styleguide 1.3.1.6
+ */
+.lac-minimenu .lac-minimenu-body {
+    overflow-y: auto;
+    padding: 4px;
+    margin: 0.5em;
+}
+
+/**
+ * .lac-minimenu .lac-minimenu-footer
+ *
+ * ミニメニューの下部領域を指すセレクタです。
+ *
+ * Styleguide 1.3.1.7
+ */
+.lac-minimenu .lac-minimenu-footer {
+    text-align: center;
+}
+
+
+/**
+ * .lac-minimenu .lac-onminimenu-button
+ *
+ * ミニメニュー上のボタンに共通して付与されるセレクタです。
+ * ミニメニュー上のボタンは二重構造になっており、外側に付与されます。
+ *
+ * Styleguide 1.3.1.8
+ */
+.lac-minimenu .lac-onminimenu-button {
+    padding: 4px;
+    background-color: rgb(66, 69, 69);
+    border-radius: 2em;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 0.6em;
+}
+
+/**
+ * .lac-minimenu .lac-onminimenu-button > .lac-onminimenu-inner-button
+ *
+ * ミニメニュー上のボタンに共通して付与されるセレクタです。
+ * ミニメニュー上のボタンは二重構造になっており、内側に付与されます。
+ *
+ * Styleguide 1.3.1.9
+ */
+.lac-minimenu .lac-onminimenu-button > .lac-onminimenu-inner-button {
+    padding: 4px 1em;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2em;
+    color: rgb(4, 0, 0);
+}
+
+/**
+ * .lac-minimenu .lac-onminimenu-button.lac-onminimenu-button--disabled
+ *
+ * ミニメニュー上のボタンが無効な状態を表すmodifierです。
+ *
+ * Styleguide 1.3.1.10
+ */
+.lac-minimenu .lac-onminimenu-button.lac-onminimenu-button--disabled {
+    cursor: default;
+}
+
+/**
+ * .lac-minimenu .lac-onminimenu-button.lac-onminimenu-button--disabled > .lac-onminimenu-inner-button
+ *
+ * ミニメニュー上のボタンが無効な場合、
+ * 二重構造の内側の見た目を記述するスタイルです。
+ *
+ * Styleguide 1.3.1.11
+ */
+.lac-minimenu .lac-onminimenu-button.lac-onminimenu-button--disabled > .lac-onminimenu-inner-button {
+    background-color: rgb(104, 104, 104);
+}
+
+
+/**
+ * .lac-toggle-unit
+ *
+ * 単位切替ボタンを指すセレクタです。
+ *
+ * 下記ミニメニューで共通です。
+ * - チャプターミニメニュー
+ * - 再生範囲ミニメニュー
+ *
+ * Styleguide 1.3.1.12
+ */
+.lac-toggle-unit {
+    width: 9em;
+}
+
+
+/**
+ * チャプターミニメニュー
+ *
+ * Styleguide 1.3.2
+ */
+
+
+/**
+ * .lac-chapter-minimenu ol
+ *
+ * 区切り位置入力フォームの
+ * 各行をまとめる要素を指すセレクタです。
+ *
+ * Styleguide 1.3.2.1
+ */
+.lac-chapter-minimenu ol {
+    text-align: center;
+    list-style: none;
+    counter-reset: chapter-separator;
+    padding: 0;
+    margin: 0 auto;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0 1px;
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item
+ *
+ * 区切り位置入力フォームの各行を指すセレクタです。
+ *
+ * Styleguide 1.3.2.2
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item {
+    display: table-row;
+    margin-bottom: 1px;
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item--added-animation
+ *
+ * 新しく追加された区切り位置入力フォームに付与されるmodifierです。
+ *
+ * Styleguide 1.3.2.3
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item--added-animation {
+    animation: lacSeparatorFormItemFadeIn 0.1s ease-in-out 0s 1 normal;
+}
+
+/**
+ * @keyframes lacSeparatorFormItemFadeIn
+ *
+ * 区切り位置入力フォームが新しく追加された際のアニメーションを定義します。
+ *
+ * Styleguide 1.3.2.4
+ */
+@keyframes lacSeparatorFormItemFadeIn {
+    0% {transform: scaleX(0)}
+    100% {transform: scaleX(1)}
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item > *
+ *
+ * 区切り位置入力フォームの各行内のレイアウトを調節します。
+ *
+ * Styleguide 1.3.2.5
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item > * {
+    display: table-cell;
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item .lac-separator-number
+ *
+ * 区切り位置入力フォームの各行の行番号部分を指すセレクタです。
+ *
+ * Styleguide 1.3.2.6
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item .lac-separator-number {
+    background-color: rgba(4, 0, 0, 0.33);
+    padding: 0 0.8em;
+    vertical-align: middle;
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item .lac-separator-number:before
+ *
+ * 区切り位置入力フォームの各行の行番号を採番します。
+ *
+ * Styleguide 1.3.2.7
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item .lac-separator-number:before {
+    counter-increment: chapter-separator;
+    content: counter(chapter-separator);
+}
+
+/**
+ * .lac-chapter-minimenu ol li.lac-separator-form-item input[type=number]
+ *
+ * 区切り位置入力フォームの各行の入力欄を指すセレクタです。
+ *
+ * Styleguide 1.3.2.8
+ */
+.lac-chapter-minimenu ol li.lac-separator-form-item input[type=number] {
+    width: 5em;
+}
+
+/**
+ * .lac-chapter-minimenu .lac-remove
+ *
+ * 区切り位置入力フォームの各行の削除ボタンを指すセレクタです。
+ *
+ * Styleguide 1.3.2.9
+ */
+.lac-chapter-minimenu .lac-remove {
+    cursor: pointer;
+    padding-left: 0.4em;
+    vertical-align: middle;
+}
+
+/**
+ * .lac-chapter-minimenu .lac-remove:before
+ *
+ * 区切り位置入力フォームの各行の削除ボタンの見た目を記述します。
+ *
+ * Styleguide 1.3.2.10
+ */
+.lac-chapter-minimenu .lac-remove:before {
+    font-family: 'liveact-controls';
+    font-style: normal;
+    content: '\e913';
+    font-size: 0.5em;
+}
+
+/**
+ * .lac-chapter-minimenu .lac-remove:hover
+ *
+ * 区切り位置入力フォームの各行の削除ボタンの見た目を記述します。
+ * マウスカーソルを載せた際に適用されます。
+ *
+ * Styleguide 1.3.2.11
+ */
+.lac-chapter-minimenu .lac-remove:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+/**
+ * .lac-chapter-minimenu .lac-chapter-add
+ *
+ * 区切り位置追加ボタンを指すセレクタです。
+ *
+ * Styleguide 1.3.2.12
+ */
+.lac-chapter-minimenu .lac-chapter-add {
+    width: 4em;
+    margin-right: 1em;
+}
+
+
+/**
+ * 再生範囲ミニメニュー
+ *
+ * Styleguide 1.3.3
+ */
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-wrap
+ *
+ * 再生範囲ミニメニューのウィンドウに対応する要素を指すセレクタです。
+ *
+ * Styleguide 1.3.3.1
+ */
+.lac-playback-range-minimenu .lac-minimenu-wrap {}
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-header
+ *
+ * 再生範囲ミニメニューの表題部分を指すセレクタです。
+ *
+ * Styleguide 1.3.3.2
+ */
+.lac-playback-range-minimenu .lac-minimenu-header {
+    padding: 0;
+}
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-body
+ *
+ * 再生範囲ミニメニューの内容部分を指すセレクタです。
+ *
+ * Styleguide 1.3.3.3
+ */
+.lac-playback-range-minimenu .lac-minimenu-body {
+    text-align: center;
+}
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-body > .lac-playback-range-minimenu-item
+ *
+ * 再生範囲ミニメニューの開始・終了入力フォーム各行を指すセレクタです。
+ *
+ * Styleguide 1.3.3.4
+ */
+.lac-playback-range-minimenu .lac-minimenu-body > .lac-playback-range-minimenu-item {
+    margin: 0 auto 4px;
+    display: block;
+}
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-body > .lac-playback-range-minimenu-item > label > input
+ *
+ * 再生範囲ミニメニューの開始・終了入力フォーム各行の、入力欄を指すセレクタです。
+ *
+ * Styleguide 1.3.3.5
+ */
+.lac-playback-range-minimenu .lac-minimenu-body > .lac-playback-range-minimenu-item > label > input {
+    width: 5em;
+    margin-left: 1em;
+}
+
+/**
+ * .lac-playback-range-minimenu .lac-minimenu-pin
+ *
+ * 再生範囲ミニメニューのピン留めアイコンは非表示です。
+ *
+ * Styleguide 1.3.3.6
+ */
+.lac-playback-range-minimenu .lac-minimenu-pin {
+    display: none;
+}
+
+
+/**
+ * 再生速度ミニメニュー
+ *
+ * Styleguide 1.3.4
+ */
+
+
+/**
+ * .lac-playback-rate-minimenu .lac-minimenu-body
+ *
+ * 再生速度ミニメニューの内容部分を指すセレクタです。
+ *
+ * Styleguide 1.3.4.1
+ */
+.lac-playback-rate-minimenu .lac-minimenu-body {
+    text-align: center;
+}
+
+/**
+ * .lac-playback-rate-minimenu .lac-minimenu-body .lac-playback-rate-minimenu-line
+ *
+ * 再生速度ミニメニューの、プルダウンつきスライダUI部分を指すセレクタです。
+ *
+ * Styleguide 1.3.4.2
+ */
+.lac-playback-rate-minimenu .lac-minimenu-body .lac-playback-rate-minimenu-line {
+    display: flex;
+}
+
+/**
+ * .lac-playback-rate-minimenu .lac-minimenu-body .lac-playback-rate-minimenu-line select
+ *
+ * 再生速度ミニメニューの、プルダウンつきスライダUIのプルダウン部分を指すセレクタです。
+ *
+ * Styleguide 1.3.4.3
+ */
+.lac-playback-rate-minimenu .lac-minimenu-body .lac-playback-rate-minimenu-line select {
+    margin-left: 0.5em;
+}
+
+
+
+/**
+ *
+ * スライダー
+ *
+ * Styleguide 1.4
+ */
+
+/**
+ * スライダー共通
+ *
+ * Styleguide 1.4.1
+ */
+
+
+/**
+ * .lac-slider
+ *
+ * スライダー類に共通して付与されるセレクタです。
+ * - シークバー
+ * - 音量バー
+ *
+ * .lac-slider-wrapを包含します。
+ *
+ * Styleguide 1.4.1.1
+ */
+.lac-slider {
+    display: inline-flex;
+
+    height: 1em;
+    /**
+     * スライダーノブが掃く部分よりも外側の空白部分は
+     * マウスやタップを透過させる
+     */
+    pointer-events: none;
+
+    padding: 0 0.3em;
+    margin: 0 0.1em;
+}
+
+/**
+ * .lac-slider .lac-slider-wrap
+ *
+ * スライダーの部品を束ねます。
+ *
+ * 下記を包含します。
+ * - .lac-slider-background
+ * - .lac-slider-base
+ * - .lac-slider-pointer
+ *
+ * Styleguide 1.4.1.2
+ */
+.lac-slider .lac-slider-wrap {
+    position: relative;
+    width: 100%;
+    height: 0;
+    margin: auto 0;
+}
+
+/**
+ * .lac-slider .lac-slider-wrap *
+ *
+ * スライダーを構成する各部品を
+ * タップ・クリック可能にします。
+ *
+ * Styleguide 1.4.1.3
+ */
+.lac-slider .lac-slider-wrap * {
+    pointer-events: auto;
+}
+
+/**
+ * .lac-slider.lac-slider .lac-slider-background,
+ * .lac-slider.lac-slider .lac-slider-background-inner,
+ * .lac-slider.lac-slider .lac-slider-base
+ *
+ * スライダーを構成する各部品共通の設定です。
+ *
+ * Styleguide 1.4.1.4
+ */
+.lac-slider.lac-slider .lac-slider-background,
+.lac-slider.lac-slider .lac-slider-background-inner,
+.lac-slider.lac-slider .lac-slider-base {
+    position: absolute;
+    font-size: 140%;
+    width: 100%;
+    height: 0.10em;
+    margin-top: -0.05em;
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    cursor: pointer;
+}
+
+/**
+ * .lac-slider.lac-slider .lac-slider-background
+ *
+ * スライダーノブが掃く領域のエンボスを表現します。
+ * くぼみの外側です。
+ *
+ * Styleguide 1.4.1.5
+ */
+.lac-slider.lac-slider .lac-slider-background {
+    opacity: 0.18;
+    background: linear-gradient(0deg, rgba(128, 128, 128, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    width: calc(100% + 0.1em);
+    margin-left: -0.05em;
+    font-size: 555%;
+    border-radius: 1em;
+}
+
+/**
+ * .lac-slider.lac-slider .lac-slider-background .lac-slider-background-inner
+ *
+ * スライダーノブが掃く領域のエンボスを表現します。
+ * くぼみの内側です。
+ *
+ * Styleguide 1.4.1.6
+ */
+.lac-slider.lac-slider .lac-slider-background .lac-slider-background-inner {
+    width: calc(100% - 0.01em);
+    margin-left: 0.005em;
+    height: calc(100% - 0.01em);
+    margin-top: 0.005em;
+    background: rgb(4, 0, 0);
+    border-radius: 1em;
+}
+
+/**
+ * .lac-slider.lac-slider .lac-slider-base {
+ *
+ * スライダーノブが動く溝を表現します。
+ *
+ * Styleguide 1.4.1.7
+ */
+.lac-slider.lac-slider .lac-slider-base {
+    background: rgba(153, 153, 153, 0.75);
+    pointer-events: none;
+}
+
+/**
+ * .lac-slider .lac-slider-pointer
+ *
+ * スライダーノブです。
+ *
+ * Styleguide 1.4.1.8
+ */
+.lac-slider .lac-slider-pointer {
+    position: absolute;
+    z-index: 100;
+    font-size: 555%;
+    width:  0.1em;
+    height: 0.1em;
+    margin-top:  -0.05em;
+    margin-left: -0.05em;
+    /* 白色 */
+    background: rgba(220, 220, 220, 1);
+    /* オレンジ(シークバーのポインタと同じ色) */
+    /*background: rgba(234, 151, 35, 1);*/
+    border-radius:         50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius:    50%;
+    cursor: pointer;
+}
+
+
+/**
+ * シークバースライダー
+ *
+ * Styleguide 1.4.2
+ */
+
+
+/**
+ * .lac-slider.lac-slider--seek
+ *
+ * シークバースライダーを表すmodifierです。
+ *
+ * Styleguide 1.4.2.1
+ */
+.lac-slider.lac-slider--seek {
+    /* fill rest width */
+    flex-grow: 1;
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-pointer
+ *
+ * スライダーノブをシークバー仕様に調節します。
+ *
+ * Styleguide 1.4.2.2
+ */
+.lac-slider.lac-slider--seek .lac-slider-pointer {
+    background: rgba(234, 151, 35, 1);
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-seekbar-loading,
+ * .lac-slider.lac-slider--seek .lac-seekbar-current,
+ * .lac-slider.lac-slider--seek .lac-seekbar-prohibited
+ *
+ * スライダーノブが動く溝部分について、下記を表現します。
+ * - .lac-seekbar-loading    ... 読み込み済領域
+ * - .lac-seekbar-current    ... 現在の再生位置
+ * - .lac-seekbar-prohibited ... 再生禁止領域
+ *
+ * Styleguide 1.4.2.3
+ */
+.lac-slider.lac-slider--seek .lac-seekbar-loading,
+.lac-slider.lac-slider--seek .lac-seekbar-current,
+.lac-slider.lac-slider--seek .lac-seekbar-prohibited {
+    position: absolute;
+    font-size: 140%;
+    width: 100%;
+    height: 0.10em;
+    margin-top: -0.05em;
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    /**
+     * タップやマウスのイベントはここでは捕捉せず、
+     * .lac-slider-baseに委ねます。
+     */
+    pointer-events: none;
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-seekbar-current
+ *
+ * スライダーノブが動く溝部分において、「現在の再生位置」の見た目を記述します。
+ *
+ * Styleguide 1.4.2.3
+ */
+.lac-slider.lac-slider--seek .lac-seekbar-current {
+    background: rgba(234, 151, 35, 1);
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-seekbar-loading,
+ * .lac-slider.lac-slider--seek .lac-seekbar-prohibited
+ *
+ * スライダーノブが動く溝部分において、下記の見た目を記述します。
+ * - 読み込み済領域
+ * - 再生禁止領域
+ *
+ * Styleguide 1.4.2.4
+ */
+.lac-slider.lac-slider--seek .lac-seekbar-loading,
+.lac-slider.lac-slider--seek .lac-seekbar-prohibited {
+    /**
+     * 背景(background)はJavaScriptで動的に設定しています。
+     */
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list
+ *
+ * 再生範囲調節つまみを束ねる要素を指すセレクタです。
+ * デフォルトでは非表示です。
+ *
+ * Styleguide 1.4.2.5
+ */
+.lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list {
+    /* デフォルトでは非表示 */
+    display: none;
+    cursor: none;
+    pointer-events: none;
+}
+
+/**
+ * .liveact-controls--playback-range-adjustment-mode .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list
+ *
+ * 再生範囲調節つまみを束ねる要素を指すセレクタです。
+ * 再生範囲調整モードにおいて表示します。
+ *
+ * Styleguide 1.4.2.5
+ */
+.liveact-controls--playback-range-adjustment-mode .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list {
+    pointer-events: auto;
+    display: block;
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list > .lac-playback-range-arrow
+ *
+ * 再生範囲調節つまみを表現します。
+ * 大きさの調節等を行います。
+ *
+ * Styleguide 1.4.2.6
+ */
+.lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list > .lac-playback-range-arrow {
+    position: absolute;
+    cursor: pointer;
+    margin-top: -1em;
+    margin-left: -0.52em;
+    font-size: 0.33em;
+    color: rgba(255, 255, 255, 1);
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list > .lac-playback-range-arrow:before
+ *
+ * 再生範囲調節つまみを表現します。
+ * アイコンの見た目等を記述します。
+ *
+ * Styleguide 1.4.2.7
+ */
+.lac-slider.lac-slider--seek .lac-slider-wrap > .lac-playback-range-arrow-list > .lac-playback-range-arrow:before {
+    font-family: 'liveact-controls';
+    font-style: normal;
+    content: '\e912';
+}
+
+/**
+ * .liveact-controls--playback-range-adjustment-mode .lac-slider.lac-slider--seek .lac-slider-pointer
+ *
+ * 再生範囲調整モードでは、スライダーノブを非表示にします。
+ * 再生範囲調節つまみと重なってしまい操作性を損なうためです。
+ *
+ * Styleguide 1.4.2.8
+ */
+.liveact-controls--playback-range-adjustment-mode .lac-slider.lac-slider--seek .lac-slider-pointer {
+    display: none;
+}
+
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-seekbar-separator-list
+ *
+ * シークバー上のチャプター区切り線を束ねる要素を指すセレクタです。
+ *
+ * Styleguide 1.4.2.9
+ */
+.lac-slider.lac-slider--seek .lac-slider-wrap > .lac-seekbar-separator-list {
+    cursor: none;
+    pointer-events: none;
+}
+
+/**
+ * .lac-slider.lac-slider--seek .lac-slider-wrap > .lac-seekbar-separator-list > .lac-seekbar-separator
+ *
+ * シークバー上のチャプター区切り線を表現します。
+ *
+ * Styleguide 1.4.2.10
+ */
+.lac-slider.lac-slider--seek .lac-slider-wrap > .lac-seekbar-separator-list > .lac-seekbar-separator {
+    position: absolute;
+    cursor: none;
+    pointer-events: none;
+    width: 10px;
+    height: 0.1em;
+    transform: scaleX(0.1);
+    font-size: 555%;
+    margin-top: -0.05em;
+    margin-left: -5px;
+    background: rgba(255, 255, 255, 1);
+}
+
+
+/**
+ * シークバースライダー(コンパクト)
+ *
+ * Styleguide 1.4.3
+ */
+
+/**
+ * .lac-slider.lac-slider--seek.lac-slider--compact,
+ * .lac-slider.lac-slider--seek.lac-seekbar--compact
+ *
+ * コンパクトなシークバースライダーに付与されるmodifierです。
+ * 二段組のコントロールUIで使用すると効果的です。
+ *
+ * Styleguide 1.4.3.1
+ */
+.lac-slider.lac-slider--seek.lac-slider--compact,
+.lac-slider.lac-slider--seek.lac-seekbar--compact {
+    height: 0.5em;
+    margin: 0;
+}
+
+/**
+ * .lac-slider.lac-slider--seek.lac-slider--compact .lac-slider-wrap,
+ * .lac-slider.lac-slider--seek.lac-seekbar--compact .lac-slider-wrap
+ *
+ * コンパクトなシークバースライダーの、
+ * 各部品を束ねる要素を指すセレクタです。
+ *
+ * Styleguide 1.4.3.2
+ */
+.lac-slider.lac-slider--seek.lac-slider--compact .lac-slider-wrap,
+.lac-slider.lac-slider--seek.lac-seekbar--compact .lac-slider-wrap {
+    margin: auto 0 0.2em;
+}
+
+
+/**
+ * 音量調節スライダー
+ *
+ * Styleguide 1.4.4
+ */
+
+
+/**
+ * .lac-slider.lac-slider--volume
+ *
+ * 音量調節スライダーに付与されるmodifierです。
+ *
+ * Styleguide 1.4.4.1
+ */
+.lac-slider.lac-slider--volume {
+    padding: 0 0.2em;
+    margin: 0 0.15em;
+    width: 2em;
+}
+
+/**
+ * .lac-slider.lac-slider--volume .lac-slider-background,
+ * .lac-slider.lac-slider--volume .lac-slider-pointer
+ *
+ * スライダーノブ、ならびにスライダーノブが掃く領域の大きさを調節します。
+ *
+ * Styleguide 1.4.4.2
+ */
+.lac-slider.lac-slider--volume .lac-slider-background,
+.lac-slider.lac-slider--volume .lac-slider-pointer {
+    font-size: 450%;
+}
+
+
+/**
+ * 再生速度調節スライダー
+ *
+ * Styleguide 1.4.5
+ */
+
+
+/**
+ * .lac-minimenu .lac-slider.lac-slider--playback-rate
+ *
+ * 再生速度調節ミニメニュー上の再生速度調節スライダーに付与されるmodifierです。
+ *
+ * Styleguide 1.4.5.1
+ */
+.lac-minimenu .lac-slider.lac-slider--playback-rate {
+    flex-grow: 1;
+    font-size: 2em;
+}
+
+
+/**
+ * LiveAct(R) PRO内部で使用するスタイル
+ *
+ * Styleguide 2
+ */
+
+/**
+ * 汎用
+ *
+ * Styleguide 2.1
+ */
+
+/**
+ * .liveact-player__element--invisible
+ *
+ * LiveAct(R) PRO管理下の要素を非表示にする際に付与されるmodifierです。
+ *
+ * Styleguide 2.1.1
+ */
+.liveact-player__element--invisible {
+    display: none !important;
+}
+
+/**
+ * .liveact-player__element--reset-touch
+ *
+ * JavaScriptの PointerEvent向けの、
+ * タッチ時デフォルト動作を無効化する際に使用するmodifierです。
+ *
+ * Styleguide 2.1.2
+ */
+.liveact-player__element--reset-touch {}
+
+/**
+ * .liveact-player__element--reset-touch.liveact-player__element--MS
+ *
+ * Internet Explorer/Edge環境でのみ
+ * JavaScriptの PointerEventのタッチ時デフォルト動作を無効化します。
+ *
+ * タッチ端末上・Internet Explorer/Edge環境において
+ * スワイプ操作を検出・適切に処理するために必要です。
+ *
+ * Styleguide 2.1.3
+ */
+.liveact-player__element--reset-touch.liveact-player__element--MS {
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+/**
+ * .liveact-player__element--reset-highlight
+ *
+ * iOS/Androidにおいて、要素をタッチ操作した際の
+ * デフォルトのハイライトを無効化します
+ *
+ * Styleguide 2.1.4
+ */
+.liveact-player__element--reset-highlight {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    tap-highlight-color:rgba(0, 0, 0, 0);
+}
+
+
+/**
+ * プレーヤー全体・リサイズ計算関連
+ *
+ * Styleguide 2.2
+ */
+
+/**
+ * .lac-div
+ *
+ * プレーヤー全体を包む要素を指すセレクタです。
+ * canvas等を内包します。
+ *
+ * Styleguide 2.2.1
+ */
+.lac-div {
+    /**
+     * タッチ端末において、タップ長押し時に
+     * 選択されてしまうのを防ぎます
+     */
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    /* 子要素に合わせてリサイズします */
+    display: inline-block;
+    vertical-align: bottom;
+    overflow: hidden;
+}
+
+/**
+ * .lac-div--mobile
+ *
+ * モバイル端末で閲覧した際に付与されるmodifierです。
+ *
+ * Styleguide 2.2.2
+ */
+.lac-div--mobile {}
+
+/**
+ * .lac-div--width-set
+ *
+ * CriLaPlayer.resizeCanvasToFixedRatioWidth メソッドにより、
+ * プレーヤーを幅指定でリサイズした際に付与されるmodifierです。
+ *
+ * Styleguide 2.2.3
+ */
+.lac-div--width-set {}
+
+/**
+ * .lac-div--height-set
+ *
+ * CriLaPlayer.resizeCanvasToFixedRatioHeight メソッドにより、
+ * プレーヤーを高さ指定でリサイズした際に付与されるmodifierです。
+ *
+ * Styleguide 2.2.4
+ */
+.lac-div--height-set {}
+
+/**
+ * .lac-div__fit
+ *
+ * .lac-divの子要素で、.lac-divに
+ * ぴったりフィットするべき要素を指すセレクタです。
+ *
+ * Styleguide 2.2.5
+ */
+.lac-div__fit {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+/**
+ * .lac-div.lac-div--width-set .lac-div__fit
+ *
+ * プレーヤーを幅指定でリサイズした場合、
+ * .lac-divの子要素で、.lac-divにぴったりフィットするべき要素については、
+ * 幅方向にフィットさせます。
+ *
+ * Styleguide 2.2.6
+ */
+.lac-div.lac-div--width-set .lac-div__fit {
+    width: 100%;
+}
+
+/**
+ * .lac-div.lac-div--height-set .lac-div__fit
+ *
+ * プレーヤーを高さ指定でリサイズした場合、
+ * .lac-divの子要素で、.lac-divにぴったりフィットするべき要素については、
+ * 高さ方向にフィットさせます。
+ *
+ * Styleguide 2.2.7
+ */
+.lac-div.lac-div--height-set .lac-div__fit {
+    height: 100%;
+}
+
+/**
+ * .lac-video-div
+ *
+ * videoタグを束ねる要素を指すセレクタです。
+ *
+ * Styleguide 2.2.8
+ */
+.lac-video-div {
+    position: absolute;
+}
+
+/**
+ * .lac-video-div > video
+ *
+ * videoタグを束ねる要素の子要素のvideoタグは、
+ * 親要素いっぱいに広げます。
+ *
+ * Styleguide 2.2.9
+ */
+.lac-video-div > video {
+    position: absolute;
+    object-fit: fill;
+}
+
+/**
+ * .lac-video-div > video:first-of-type
+ *
+ * videoタグを束ねる要素の子要素のvideoタグのうち、
+ * 先頭のものは相対位置指定とします。
+ * videoタグに合わせて.lac-video-divの解像度を計算させるためです。
+ *
+ * Styleguide 2.2.10
+ */
+.lac-video-div > video:first-of-type {
+    position: relative;
+}
+
+/**
+ * .lac-audio-div
+ *
+ * audioタグを束ねる要素を指すセレクタです。
+ * 表示しません。
+ *
+ * Styleguide 2.2.11
+ */
+.lac-audio-div {
+    position: absolute;
+    display: none;
+}
+
+/**
+ * .liveact-video
+ *
+ * LiveAct(R) PRO管理下のvideoタグを指すセレクタです。
+ *
+ * Styleguide 2.2.1
+ */
+.liveact-video {
+    position: absolute;
+}
+
+
+/**
+ * リンク機能関連
+ *
+ * Styleguide 2.3
+ */
+
+
+/**
+ * .liveact-link-highlight
+ *
+ * ハイパーリンクにおいて、
+ * プレーヤーをタップ・クリックしている最中に付与されます。
+ * ハイライト演出に使用します。
+ *
+ * Styleguide 2.3.1
+ */
+.liveact-link-highlight {
+    width:  100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top:  0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+/**
+ * フルスクリーン機能関連
+ *
+ * Styleguide 2.4
+ */
+
+
+/**
+ * .liveact-fullscreen-background
+ *
+ * CriLaPlayer.fullscreen メソッドにより、
+ * プレーヤーをブラウザ内フルスクリーン化する際に
+ * 背景として使用する要素のセレクタです。
+ *
+ * Styleguide 2.4.1
+ */
+.liveact-fullscreen-background {
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 10000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+/**
+ * .liveact-fullscreen-background .liveact-controls.liveact-controls--audio,
+ * .liveact-fullscreen-background .liveact-controls.liveact-controls--swipe,
+ * .liveact-fullscreen-background .liveact-controls.liveact-controls--no-seekbar
+ *
+ * シークバーとグレーの座布団がなく、
+ * プレーヤー右下にボタンが固まっているタイプのコントロールUIは、
+ * フルスクリーン時にプレーヤー上側に移動します。
+ *
+ * モバイル環境において、フルスクリーン時に
+ * 画面下端のボタンを操作できなくなる現象を回避するためです。
+ *
+ * Styleguide 2.4.2
+ */
+.liveact-fullscreen-background .liveact-controls.liveact-controls--audio,
+.liveact-fullscreen-background .liveact-controls.liveact-controls--swipe,
+.liveact-controls--swipe__modal,
+.liveact-fullscreen-background .liveact-controls.liveact-controls--no-seekbar{
+    flex-direction: column-reverse;
+}
+
+
+/**
+ * 3. UIアイコン用フォント
+ *
+ * コントロールUIのボタンで使用するフォントです。
+ * BASE-64形式で埋め込まれています。
+ *
+ * Styleguide 3
+ */
+@font-face {
+    font-family: 'liveact-controls';
+    src:
+    url(data:application/octet-stream;base64,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) format('truetype'),
+    url(data:application/octet-stream;base64,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) format('woff');
+}
+
+
+/*
+ * カスタムCSS
+ *
+ */
+@media screen and (min-width: 769px), print
+{
+    .liveact-controls--swipe__modal{
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation:portrait)
+{
+    .liveact-controls--swipe__modal{
+        right: 10px;
+    }
+}
+@media screen and (max-width: 768px) and (orientation:landscape)
+{
+    .liveact-controls--swipe__modal{
+        left: 10px;
+    }
+    .liveact-controls--swipe__modal > .lac-row {
+        align-items: flex-start !important;
+        -webkit-align-items: flex-start !important;
+    }
+}
+
